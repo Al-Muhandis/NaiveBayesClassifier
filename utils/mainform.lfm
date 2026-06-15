@@ -1,0 +1,155 @@
+object FrmMain: TFrmMain
+  Left = 379
+  Height = 570
+  Top = 187
+  Width = 882
+  Caption = 'FrmMain'
+  ClientHeight = 570
+  ClientWidth = 882
+  DesignTimePPI = 120
+  LCLVersion = '4.8.0.0'
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  object GrpBxBase: TGroupBox
+    Left = 0
+    Height = 570
+    Top = 0
+    Width = 440
+    Align = alLeft
+    Caption = 'Word base'
+    ClientHeight = 545
+    ClientWidth = 436
+    TabOrder = 0
+    object StrngGrdWordBase: TStringGrid
+      Left = 0
+      Height = 497
+      Top = 48
+      Width = 436
+      Align = alBottom
+      Anchors = [akTop, akLeft, akRight, akBottom]
+      ColCount = 3
+      ColumnClickSorts = True
+      Columns = <      
+        item
+          Title.Caption = 'Word'
+        end      
+        item
+          Title.Caption = 'Ham'
+          Width = 60
+        end      
+        item
+          Title.Caption = 'Spam'
+          Width = 60
+        end>
+      DefaultColWidth = 300
+      FixedCols = 0
+      Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goEditing, goRowSelect, goRelaxedRowSelect, goSmoothScroll, goRowHighlight]
+      PopupMenu = ppmnWords
+      RowCount = 2
+      TabOrder = 0
+      TitleStyle = tsNative
+      OnCompareCells = StrngGrdWordBaseCompareCells
+      Cells = (
+        2
+        1
+        0
+        'Word'
+        2
+        0
+        'Ham'
+      )
+    end
+    object DrctryEdtWords: TDirectoryEdit
+      Left = 8
+      Height = 28
+      Top = 8
+      Width = 320
+      OnAcceptDirectory = DrctryEdtWordsAcceptDirectory
+      ShowHidden = False
+      ButtonWidth = 29
+      NumGlyphs = 1
+      Anchors = [akTop, akLeft, akRight]
+      MaxLength = 0
+      TabOrder = 1
+    end
+    object BtnSave: TButton
+      Left = 337
+      Height = 28
+      Top = 8
+      Width = 94
+      Anchors = [akTop, akRight]
+      Caption = 'Save'
+      TabOrder = 2
+      OnClick = BtnSaveClick
+    end
+  end
+  object GrpBxMessage: TGroupBox
+    Left = 446
+    Height = 570
+    Top = 0
+    Width = 436
+    Align = alClient
+    Caption = 'Message'
+    ClientHeight = 545
+    ClientWidth = 432
+    TabOrder = 1
+    object MmMessage: TMemo
+      Left = 8
+      Height = 409
+      Top = 40
+      Width = 404
+      Anchors = [akTop, akLeft, akRight]
+      TabOrder = 0
+      OnChange = MmMessageChange
+    end
+    object BtnClassify: TButton
+      Left = 8
+      Height = 31
+      Top = 456
+      Width = 158
+      Caption = 'Classify'
+      TabOrder = 1
+      OnClick = BtnClassifyClick
+    end
+    object SttsBrMessage: TStatusBar
+      Left = 0
+      Height = 29
+      Top = 516
+      Width = 432
+      Panels = <>
+    end
+    object BtnSpam: TButton
+      Left = 8
+      Height = 31
+      Top = 0
+      Width = 160
+      Caption = '<= to base as spam!'
+      TabOrder = 3
+      OnClick = BtnSpamClick
+    end
+    object BtnHam: TButton
+      Left = 192
+      Height = 31
+      Top = 0
+      Width = 160
+      Caption = '<= to base as ham!'
+      TabOrder = 4
+      OnClick = BtnHamClick
+    end
+  end
+  object Spltr: TSplitter
+    Left = 440
+    Height = 570
+    Top = 0
+    Width = 6
+  end
+  object ppmnWords: TPopupMenu
+    Left = 208
+    Top = 293
+    object miDeleteRow: TMenuItem
+      Caption = 'Delete word'
+      OnClick = miDeleteRowClick
+    end
+  end
+end
