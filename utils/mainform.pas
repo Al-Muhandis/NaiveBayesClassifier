@@ -35,17 +35,18 @@ type
     Spltr: TSplitter;
     SttsBrMessage: TStatusBar;
     StrngGrdWordBase: TStringGrid;
-    procedure BtnClassifyClick(Sender: TObject);
-    procedure BtnHamClick(Sender: TObject);
-    procedure BtnSpamClick(Sender: TObject);
-    procedure BtnSaveClick(Sender: TObject);
-    procedure DrctryEdtWordsAcceptDirectory(Sender: TObject; var Value: String);
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
-    procedure FormCreate(Sender: TObject);
-    procedure FormDestroy(Sender: TObject);
-    procedure miDeleteRowClick(Sender: TObject);
-    procedure MmMessageChange(Sender: TObject);
-    procedure StrngGrdWordBaseCompareCells(Sender: TObject; ACol, ARow, BCol, BRow: Integer; var Result: integer);
+    procedure BtnClassifyClick({%H-}Sender: TObject);
+    procedure BtnHamClick({%H-}Sender: TObject);
+    procedure BtnSpamClick({%H-}Sender: TObject);
+    procedure BtnSaveClick({%H-}Sender: TObject);
+    procedure DrctryEdtWordsAcceptDirectory({%H-}Sender: TObject; var Value: String);
+    procedure FormClose({%H-}Sender: TObject; var CloseAction: TCloseAction);
+    procedure FormCreate({%H-}Sender: TObject);
+    procedure FormDestroy({%H-}Sender: TObject);
+    procedure miDeleteRowClick({%H-}Sender: TObject);
+    procedure MmMessageChange({%H-}Sender: TObject);
+    procedure StrngGrdWordBaseCompareCells(Sender: TObject; ACol, ARow, {%H-}BCol, BRow: Integer; var Result: integer);
+    procedure StrngGrdWordBaseSetEditText({%H-}Sender: TObject; ACol, aRow: Integer; const Value: string);
   private
     FSpamFilter: TVisualSpamFilter;
     FCol1Asc: Boolean;
@@ -167,6 +168,23 @@ begin
     1: if not FCol1Asc then Result := -Result;
     2: if not FCol2Asc then Result := -Result;
   end;
+end;
+
+procedure TFrmMain.StrngGrdWordBaseSetEditText(Sender: TObject; ACol, aRow: Integer; const Value: string);
+var
+  aValue: Longint;
+  aWord: String;
+  aCounterRec: TCountRec;
+begin
+  if ACol>0 then
+    if TryStrToInt(Value, aValue) then
+    begin
+      aWord:=StrngGrdWordBase.Cells[0, aRow];
+      aCounterRec:=FSpamFilter.WordCounters[aWord];
+      aCounterRec.Ham:=StrngGrdWordBase.Cells[1, aRow].ToInteger;
+      aCounterRec.Spam:=StrngGrdWordBase.Cells[2, aRow].ToInteger;
+      FSpamFilter.WordCounters[aWord]:=aCounterRec;
+    end;
 end;
 
 procedure TFrmMain.OpenBase(const aDir: String);

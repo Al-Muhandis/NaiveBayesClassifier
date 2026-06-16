@@ -50,6 +50,7 @@ object FrmMain: TFrmMain
       TabOrder = 0
       TitleStyle = tsNative
       OnCompareCells = StrngGrdWordBaseCompareCells
+      OnSetEditText = StrngGrdWordBaseSetEditText
       Cells = (
         2
         1

@@ -32,6 +32,8 @@ type
     FTotalHamWords: Integer;
     FStorageDir: String;   
     procedure ExtractWords(aMessage: String; aWords: TStrings);
+    function GetWordCounters(const aWord: String): TCountRec;
+    procedure SetWordCounters(const aWord: String; aValue: TCountRec);
   protected
     property Words: TWordPairs read FWords;
     property SpamCount: Integer read FSpamCount;
@@ -53,6 +55,7 @@ type
     property StorageDir: String read FStorageDir write FStorageDir;
     property InitialSpamMessage: String read FInitialSpamMessage write FInitialSpamMessage;
     property InitialHamMessage: String read FInitialHamMessage write FInitialHamMessage;
+    property WordCounters[const aWord: String]: TCountRec read GetWordCounters write SetWordCounters;
   end;
 
 implementation
@@ -78,6 +81,16 @@ begin
   aMessage:=aMessage.Replace('"', ' ');
   aMessage:=aMessage.Replace('''', ' ');
   ExtractStrings(_Separators, [], PChar(aMessage), aWords);
+end;
+
+function TSpamFilter.GetWordCounters(const aWord: String): TCountRec;
+begin
+  Result:=FWords.KeyData[aWord];
+end;
+
+procedure TSpamFilter.SetWordCounters(const aWord: String; aValue: TCountRec);
+begin
+  FWords.AddOrSetData(aWord, aValue);
 end;
 
 constructor TSpamFilter.Create;
