@@ -61,7 +61,7 @@ type
 implementation
 
 uses
-  fpjson, LConvEncoding, StrUtils
+  fpjson, LConvEncoding, LazUTF8, StrUtils
   ;
 
 var
@@ -132,7 +132,9 @@ begin
       Inc(FHamCount);
     for w in aWords do
     begin
-      aWord := AnsiLowerCase(w);
+      { UTF-8 aware: AnsiLowerCase leaves non-ASCII bytes untouched, so
+        Cyrillic words were case-split into different tokens }
+      aWord := UTF8LowerCase(w);
 
       if FWords.Find(aWord, i) then
       begin
@@ -186,7 +188,9 @@ begin
 
     for w in aWords do
     begin
-      aWord := AnsiLowerCase(w);
+      { UTF-8 aware: AnsiLowerCase leaves non-ASCII bytes untouched, so
+        Cyrillic words were case-split into different tokens }
+      aWord := UTF8LowerCase(w);
       if FWords.Find(aWord, i) then
       begin
         aSpamProbability += Ln((FWords.Data[i].Spam+1) / (FWords.Count+FTotalSpamWords));
