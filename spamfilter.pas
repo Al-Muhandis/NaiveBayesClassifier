@@ -318,7 +318,12 @@ begin
     aFile:=TStringList.Create;
     try
       aFile.Text:=aJSON.FormatJSON();
-      aFile.SaveToFile(FStorageDir+'words.json');
+      { Save atomically: write to a temp file, then rename it over the target,
+        so a crash in the middle never leaves a truncated knowledge base }
+      aFile.SaveToFile(FStorageDir+'words.json.tmp');
+      if FileExists(FStorageDir+'words.json') then
+        DeleteFile(FStorageDir+'words.json');
+      RenameFile(FStorageDir+'words.json.tmp', FStorageDir+'words.json');
     finally
       aFile.Free;
     end;
